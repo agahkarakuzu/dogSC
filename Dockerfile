@@ -53,7 +53,7 @@ RUN cd $HOME; \
     make -j4; \
     make install
 
-RUN apt-get install -y liboctave2
+RUN apt-get install -y liboctave4
 #RUN apt-get install -y libgdcm-tools
 
 # Octave add some packages 
