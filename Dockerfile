@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:0c68990e9304
+FROM jupyter/scipy-notebook:cc9feab481f7
 
 USER root
 
@@ -105,10 +105,3 @@ COPY setNifti.m $HOME/work
 
 
 RUN cd $HOME/work
-
-
-
-
-
-
-
