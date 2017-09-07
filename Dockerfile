@@ -2,12 +2,16 @@ FROM jupyter/scipy-notebook:cc9feab481f7
 
 USER root
 
-RUN sudo add-apt-repository ppa:openjdk/ppa
+
 RUN apt-get update; \
     #apt-get install -y --no-install-recommends octave;\
     apt-get install -y nodejs; \
     apt-get install -y npm; \
-    apt-get install -y autoconf
+    apt-get install -y autoconf;\
+    apt-get install -y python-software-properties
+
+RUN sudo add-apt-repository ppa:openjdk/ppa;\
+    apt-get update
 
 
 RUN apt-get update && apt-get -y install ghostscript && apt-get clean
