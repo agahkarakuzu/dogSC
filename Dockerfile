@@ -2,7 +2,7 @@ FROM jupyter/scipy-notebook:cc9feab481f7
 
 USER root
 
-
+RUN sudo add-apt-repository ppa:openjdk/ppa
 RUN apt-get update; \
     #apt-get install -y --no-install-recommends octave;\
     apt-get install -y nodejs; \
