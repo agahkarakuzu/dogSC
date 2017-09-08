@@ -11,7 +11,7 @@ RUN apt-get update; \
     apt-get install -y software-properties-common
 
 RUN sudo apt-add-repository ppa:octave/stable;\
-    sudo apt-add-repository ppa:openjdk/ppa;\
+    sudo apt-add-repository openjdk-r/ppa;\
     apt-get update
 
 
