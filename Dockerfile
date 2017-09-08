@@ -10,9 +10,9 @@ RUN apt-get update; \
     apt-get install -y autoconf;\
     apt-get install -y software-properties-common
 
-#RUN sudo apt-add-repository ppa:octave/stable;\
+RUN sudo apt-add-repository ppa:octave/stable;\
     #sudo apt-add-repository ppa:openjdk/ppa;\
-    #apt-get update
+    apt-get update
 
 
 
@@ -47,11 +47,13 @@ RUN cd $HOME/GraphicsMagick-1.3.25; \
 # After building GM, octave must be built manually. Below are the dependencies for Octave
 
 
-RUN apt-get install -y gcc g++ gfortran libblas-dev liblapack-dev libpcre3-dev libarpack2-dev libcurl4-gnutls-dev epstool libfftw3-dev transfig libfltk1.3-dev libfontconfig1-dev libfreetype6-dev libgl2ps-dev libglpk-dev libreadline-dev gnuplot libhdf5-serial-dev libsndfile1-dev llvm-dev lpr texinfo libgl1-mesa-dev libosmesa6-dev pstoedit portaudio19-dev libqhull-dev libqrupdate-dev libqscintilla2-dev libqt4-dev libqtcore4 libqtwebkit4 libqt4-network libqtgui4 libqt4-opengl-dev libsuitesparse-dev texlive libxft-dev zlib1g-dev automake bison flex gperf gzip icoutils librsvg2-bin libtool perl rsync tar
+RUN apt-get install -y gcc g++ gfortran libblas-dev liblapack-dev libpcre3-dev libarpack2-dev libcurl4-gnutls-dev epstool libfftw3-dev transfig libfltk1.3-dev libfontconfig1-dev libfreetype6-dev libgl2ps-dev libglpk-dev libreadline-dev gnuplot libhdf5-serial-dev libsndfile1-dev llvm-dev lpr texinfo libgl1-mesa-dev libosmesa6-dev pstoedit portaudio19-dev libqhull-dev libqrupdate-dev libqscintilla2-dev libqt4-dev libqtcore4 libqtwebkit4 libqt4-network libqtgui4 libqt4-opengl-dev libsuitesparse-dev texlive libxft-dev zlib1g-dev automake bison flex gperf gzip icoutils librsvg2-bin libtool perl rsync tar libgif4 libjpeg62-turbo libxtst6 libatk-wrapper-java-jni
 
 RUN cd $HOME; \
     wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb;\
     wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
+    wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jre-headless_7u151-2.6.11-1~deb8u1_amd64.deb;\
+    dpkg -i $HOME/openjdk-7-jre-headless_7u151-2.6.11-1~deb8u1_amd64.deb;\
     dpkg -i $HOME/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
     dpkg -i $HOME/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb
 
