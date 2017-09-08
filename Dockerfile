@@ -12,8 +12,8 @@ RUN apt-get update; \
 
 RUN sudo apt-add-repository ppa:octave/stable;\
     sudo apt-add-repository ppa:openjdk/ppa;\
-    apt-get update;\
-    apt-get install -y openjdk-7-jdk
+    apt-get update
+
 
 
 RUN apt-get update && apt-get -y install ghostscript && apt-get clean
