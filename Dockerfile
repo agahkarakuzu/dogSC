@@ -8,7 +8,7 @@ RUN apt-get update; \
     apt-get install -y nodejs; \
     apt-get install -y npm; \
     apt-get install -y autoconf;\
-    apt-get install -y python-software-properties
+    apt-get install -y software-properties-common
 
 RUN sudo apt-add-repository ppa:octave/stable;\
     apt-get update
@@ -49,7 +49,7 @@ RUN apt-get install -y gcc g++ gfortran libblas-dev liblapack-dev libpcre3-dev l
 
 RUN cd $HOME; \
     wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    dpkg -i $HOME/openjdk-7-jdk_7u151-2.6.11-1-deb8u1_amd64.deb
+    dpkg -i $HOME/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb
 
 # Build octave 
 
