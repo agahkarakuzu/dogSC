@@ -11,7 +11,9 @@ RUN apt-get update; \
     apt-get install -y software-properties-common
 
 RUN sudo apt-add-repository ppa:octave/stable;\
-    apt-get update
+    sudo apt-add-repository ppa:openjdk/ppa;\
+    apt-get update;\
+    apt-get install -y openjdk-7-jdk
 
 
 RUN apt-get update && apt-get -y install ghostscript && apt-get clean
@@ -49,6 +51,8 @@ RUN apt-get install -y gcc g++ gfortran libblas-dev liblapack-dev libpcre3-dev l
 
 RUN cd $HOME; \
     wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb;\
+    wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
+    dpkg -i $HOME/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
     dpkg -i $HOME/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb
 
 # Build octave 
