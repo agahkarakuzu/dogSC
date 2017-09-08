@@ -71,6 +71,11 @@ RUN cd $HOME; \
     ./configure LD_LIBRARY_PATH=/opt/OpenBLAS/lib CPPFLAGS=-I/opt/OpenBLAS/include LDFLAGS=-L/opt/OpenBLAS/lib; \
     make -j4; \
     make install
+RUN cd $HOME; \
+wget http://ftp.us.debian.org/debian/pool/main/g/glibc/multiarch-support_2.19-18+deb8u10_amd64.deb;\
+wget http://ftp.us.debian.org/debian/pool/main/o/octave/liboctave2_3.8.2-4_amd64.deb;\
+dpkg -i $HOME/multiarch-support_2.19-18+deb8u10_amd64.deb;\
+dpkg -i $HOME/liboctave2_3.8.2-4_amd64.deb;
 
 RUN apt-get install -y liboctave2
 #RUN apt-get install -y libgdcm-tools
