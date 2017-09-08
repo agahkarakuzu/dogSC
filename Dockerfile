@@ -10,9 +10,9 @@ RUN apt-get update; \
     apt-get install -y autoconf;\
     apt-get install -y software-properties-common
 
-RUN sudo apt-add-repository ppa:octave/stable;\
-    sudo apt-add-repository ppa:openjdk/ppa;\
-    apt-get update
+#RUN sudo apt-add-repository ppa:octave/stable;\
+    #sudo apt-add-repository ppa:openjdk/ppa;\
+    #apt-get update
 
 
 
