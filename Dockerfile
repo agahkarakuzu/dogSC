@@ -102,8 +102,8 @@ wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libumfpack5.6.2_4.2
 dpkg -i $HOME/libamd2.3.1_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libcamd2.3.1_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libcolamd2.8.0_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libcholmod2.1.2_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libccolamd2.8.0_4.2.1-3_amd64.deb;\
+dpkg -i $HOME/libcholmod2.1.2_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libumfpack5.6.2_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
 dpkg -i $HOME/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
