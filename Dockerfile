@@ -89,7 +89,7 @@ wget http://ftp.us.debian.org/debian/pool/main/o/octave/liboctave2_3.8.2-4_amd64
 wget http://ftp.us.debian.org/debian/pool/main/a/atlas/libatlas3-base_3.10.2-7_amd64.deb;\
 #wget http://ftp.us.debian.org/debian/pool/main/b/blas/libblas3_1.2.20110419-10_amd64.deb;\
 #wget http://ftp.us.debian.org/debian/pool/main/o/openblas/libopenblas-base_0.2.12-1_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/a/arpack/libarpack2_3.1.5-3_amd64.deb;\
+#wget http://ftp.us.debian.org/debian/pool/main/a/arpack/libarpack2_3.1.5-3_amd64.deb;\
 #wget http://ftp.us.debian.org/debian/pool/main/g/glibc/multiarch-support_2.19-18+deb8u10_amd64.deb;\
 wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libamd2.3.1_4.2.1-3_amd64.deb;\
 wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcamd2.3.1_4.2.1-3_amd64.deb;\
@@ -99,15 +99,16 @@ wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcolamd2.8.0_4.2.
 wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
 wget http://ftp.us.debian.org/debian/pool/main/h/hdf5/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
 wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libumfpack5.6.2_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libumfpack5.6.2_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
-dpkg -i $HOME/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
+dpkg -i $HOME/libamd2.3.1_4.2.1-3_amd64.deb;\
+dpkg -i $HOME/libcamd2.3.1_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libcolamd2.8.0_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libcholmod2.1.2_4.2.1-3_amd64.deb;\
 dpkg -i $HOME/libccolamd2.8.0_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libcamd2.3.1_4.2.1-3_amd64.deb;\
+dpkg -i $HOME/libumfpack5.6.2_4.2.1-3_amd64.deb;\
+dpkg -i $HOME/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
+dpkg -i $HOME/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
 #dpkg -i $HOME/multiarch-support_2.19-18+deb8u10_amd64.deb;\
-dpkg -i $HOME/libarpack2_3.1.5-3_amd64.deb;\
+#dpkg -i $HOME/libarpack2_3.1.5-3_amd64.deb;\
 #dpkg -i $HOME/libopenblas-base_0.2.12-1_amd64.deb;\
 #dpkg -i $HOME/libblas3_1.2.20110419-10_amd64.deb;\
 dpkg -i $HOME/libatlas3-base_3.10.2-7_amd64.deb;\
