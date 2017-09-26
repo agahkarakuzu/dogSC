@@ -164,6 +164,8 @@ USER $NB_USER
 
 COPY dogSC_data.tar.gz $HOME/work
 COPY dogSC.ipynb $HOME/work
+COPY bokehCorPlot.ipynb $HOME/work
+COPY README.ipynb $HOME/work
 COPY ReadFrame.tar.gz $HOME/work
 COPY setNifti.m $HOME/work
 
