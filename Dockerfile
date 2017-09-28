@@ -168,6 +168,8 @@ COPY bokehCorPlot.ipynb $HOME/work
 COPY README.ipynb $HOME/work
 COPY ReadFrame.tar.gz $HOME/work
 COPY setNifti.m $HOME/work
+COPY bkhPlot.gif $HOME/work
+COPY corInteract.gif $HOME/work
 
 
 
