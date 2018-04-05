@@ -155,7 +155,7 @@ RUN octave --eval "cd /home/packages; \
 
 RUN pip install octave_kernel
 RUN python -m octave_kernel.install
-
+RUN git clone https://github.com/neuropoly/qMRLab.git
 
 
 USER $NB_USER
