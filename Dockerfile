@@ -32,7 +32,7 @@ RUN apt-get install -y bzip2 libpng-dev libjpeg-dev libjasper-dev libbz2-dev lib
 # Fetch and extract Graphsmagick 
 
 RUN cd $HOME; \
-    wget ftp://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/GraphicsMagick-1.3.25.tar.gz; \
+    wget ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.9.tar.gz; \
     tar -xvzf GraphicsMagick-1.3.25.tar.gz
 
 # Build Graphsmagick with 16-bit levels
