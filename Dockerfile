@@ -3,175 +3,133 @@ FROM jupyter/scipy-notebook:cc9feab481f7
 USER root
 
 
-RUN apt-get update; \
-    apt-get install -y nodejs; \
-    apt-get install -y npm; \
-    apt-get install -y autoconf;\
-    apt-get install -y software-properties-common 
+RUN apt update
 
-RUN sudo apt-add-repository ppa:octave/stable;\
-    apt-get update
+RUN apt-get install -y \
+  gcc \
+  g++ \
+  gfortran \
+  make 
 
+RUN apt-get install -y \
+  libpcre3-dev
 
-RUN apt-get update && apt-get -y install ghostscript && apt-get clean
+RUN apt-get install  -y \
+  libcurl4-gnutls-dev\
+  epstool\
+  libfftw3-dev\
+  transfig\
+  libfltk1.3-dev\
+  libfontconfig1-dev\
+  libfreetype6-dev\
+  libgl2ps-dev\
+  libglpk-dev\
+  libreadline-dev\
+  gnuplot-x11\
+  libgraphicsmagick++1-dev\
+  libhdf5-serial-dev\
+  openjdk-8-jdk\
+  libsndfile1-dev\
+  llvm-dev\
+  lpr\
+  libgl1-mesa-dev\
+  libosmesa6-dev\
+  pstoedit\
+  portaudio19-dev\
+  libqhull-dev\
+  libqscintilla2-dev\
+  libsuitesparse-dev\
+  texlive\
+  texinfo\
+  libxft-dev\
+  zlib1g-dev
 
-# DATA SHARING - START
-
-# To fetch data P2P based decentralized initiations (such as DAT) or non-interactive download links.
-
-# To install DAT comment-in next line.
-#RUN npm install -g dat
-
-# Plan-B use Zonodo or OSF links using wget. 
-
-# DATA SHARING - END
-
-RUN apt-get install -y bzip2 libpng-dev libjpeg-dev libjasper-dev libbz2-dev libfreetype6 libgomp1 libtiff-dev
-
-
-# Fetch and extract Graphsmagick 
-
-RUN cd $HOME; \
-    wget https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/1.3.25/GraphicsMagick-1.3.25.tar.gz;\
-    tar -xvzf GraphicsMagick-1.3.25.tar.gz
-
-# Build Graphsmagick with 16-bit levels
-
-RUN cd $HOME/GraphicsMagick-1.3.25; \
-    ./configure  --with-quantum-depth=16 --enable-shared --disable-static --with-magick-plus-plus=yes --with-png=yes --with-tiff=yes --with-jpeg=yes --with-jp2=yes --with-dot=yes --with-jbig=yes; \
-    make -j4; \
-    make install; \
-    cd /usr/local/include; \
-    find GraphicsMagick/ -type d | xargs sudo chmod 755
-
-
-
-# After building GM, octave must be built manually. Below are the dependencies for Octave
-
-
-RUN apt-get install -y gcc g++ gfortran libblas-dev liblapack-dev libpcre3-dev libarpack2-dev libcurl4-gnutls-dev epstool libfftw3-dev transfig libfltk1.3-dev libfontconfig1-dev libfreetype6-dev libgl2ps-dev libglpk-dev libreadline-dev gnuplot libhdf5-serial-dev libsndfile1-dev llvm-dev lpr texinfo libgl1-mesa-dev libosmesa6-dev pstoedit portaudio19-dev libqhull-dev libqrupdate-dev libqscintilla2-dev libqt4-dev libqtcore4 libqtwebkit4 libqt4-network libqtgui4 libqt4-opengl-dev libsuitesparse-dev texlive libxft-dev zlib1g-dev automake bison flex gperf gzip icoutils librsvg2-bin libtool perl rsync tar openjdk-8-jdk
-
-# OpenJDK 7 dependencies -- START
-# This section has been commented out since openJDK-8 is preferred. Following dependencied shall be included:
-# - openjdk-7-jre all sub-dependencies
-# - libx11-6
-
-#RUN cd $HOME; \
-    #wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    #wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    #wget http://security.debian.org/debian-security/pool/updates/main/o/openjdk-7/openjdk-7-jre-headless_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    #wget http://ftp.us.debian.org/debian/pool/main/g/glibc/multiarch-support_2.19-18+deb8u10_amd64.deb;\
-    #wget http://ftp.us.debian.org/debian/pool/main/g/giflib/libgif4_4.1.6-11+deb8u1_amd64.deb;\
-    #wget http://ftp.us.debian.org/debian/pool/main/libj/libjpeg-turbo/libjpeg62-turbo_1.3.1-12_amd64.deb;\
-    #dpkg -i $HOME/libjpeg62-turbo_1.3.1-12_amd64.deb;\
-    #dpkg -i $HOME/multiarch-support_2.19-18+deb8u10_amd64.deb;\
-    #dpkg -i $HOME/libgif4_4.1.6-11+deb8u1_amd64.deb;\
-    #dpkg -i $HOME/openjdk-7-jre-headless_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    #dpkg -i $HOME/openjdk-7-jre_7u151-2.6.11-1~deb8u1_amd64.deb;\
-    #dpkg -i $HOME/openjdk-7-jdk_7u151-2.6.11-1~deb8u1_amd64.deb
-
-# OpenJDK 7 dependencies -- END
-
-# Build octave 
-
-RUN cd $HOME; \
-    wget https://ftp.gnu.org/gnu/octave/octave-4.2.1.tar.gz; \
-    tar -xvzf octave-4.2.1.tar.gz; \
-    cd octave-4.2.1; \
-    ./configure LD_LIBRARY_PATH=/opt/OpenBLAS/lib CPPFLAGS=-I/opt/OpenBLAS/include LDFLAGS=-L/opt/OpenBLAS/lib; \
-    make -j4; \
-    make install
-
-# Liboctave install -- START
-
-RUN cd $HOME; \
-wget http://ftp.us.debian.org/debian/pool/main/o/octave/liboctave2_3.8.2-4_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/a/atlas/libatlas3-base_3.10.2-7_amd64.deb;\
-#wget http://ftp.us.debian.org/debian/pool/main/b/blas/libblas3_1.2.20110419-10_amd64.deb;\
-#wget http://ftp.us.debian.org/debian/pool/main/o/openblas/libopenblas-base_0.2.12-1_amd64.deb;\
-#wget http://ftp.us.debian.org/debian/pool/main/a/arpack/libarpack2_3.1.5-3_amd64.deb;\
-#wget http://ftp.us.debian.org/debian/pool/main/g/glibc/multiarch-support_2.19-18+deb8u10_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libamd2.3.1_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcamd2.3.1_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libccolamd2.8.0_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcholmod2.1.2_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcolamd2.8.0_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/h/hdf5/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
-wget http://ftp.us.debian.org/debian/pool/main/s/suitesparse/libumfpack5.6.2_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libamd2.3.1_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libcamd2.3.1_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libcolamd2.8.0_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libccolamd2.8.0_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libcholmod2.1.2_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libumfpack5.6.2_4.2.1-3_amd64.deb;\
-dpkg -i $HOME/libhdf5-8_1.8.13+docs-15+deb8u1_amd64.deb;\
-dpkg -i $HOME/libcxsparse3.1.2_4.2.1-3_amd64.deb;\
-#dpkg -i $HOME/multiarch-support_2.19-18+deb8u10_amd64.deb;\
-#dpkg -i $HOME/libarpack2_3.1.5-3_amd64.deb;\
-#dpkg -i $HOME/libopenblas-base_0.2.12-1_amd64.deb;\
-#dpkg -i $HOME/libblas3_1.2.20110419-10_amd64.deb;\
-dpkg -i $HOME/libatlas3-base_3.10.2-7_amd64.deb;\
-dpkg -i $HOME/liboctave2_3.8.2-4_amd64.deb
+RUN apt-get install -y \
+  libqt4-dev \
+  libqtcore4 \
+  libqtwebkit4 \
+  libqt4-network \
+  libqtgui4 \
+  libqt4-opengl-dev   
 
 
-# Liboctave install -- END
+# Install octave
+RUN apt-get install -y \
+  autoconf\
+  automake\
+  bison \
+  flex \  
+  gperf \
+  gzip \
+  icoutils\
+  librsvg2-bin \
+  libtool \  
+  perl \
+  rsync \
+  tar
 
-# Following is working no longer
-#RUN apt-get install -y liboctave2
+# get octave in the container
+# compile openblas with 64 bit option for fortran array indexes 
+ADD OpenBLAS-0.2.19 /tmp/OpenBLAS-0.2.19
+WORKDIR /tmp/OpenBLAS-0.2.19
+RUN make -j 7
+RUN make install
+ENV LD_LIBRARY_PATH="/opt/all64/lib:${LD_LIBRARY_PATH}"
+
+Add opt64.conf /etc/ld.so.conf.d/opt64.conf
+RUN ln -s /opt/all64/lib/libopenblas.so /usr/lib/libopenblas.so
 
 
-# Octave add some packages 
+ADD qrupdate-1.1.2 /tmp/qrupdate-1.1.2
+WORKDIR /tmp/qrupdate-1.1.2
+RUN make solib
+RUN make install
 
-RUN mkdir /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/control-3.0.0.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/general-2.0.0.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/signal-1.3.2.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/image-2.6.1.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/io-2.4.7.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/statistics-1.3.0.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/struct-1.0.14.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/optim-1.5.2.tar.gz -P /home/packages
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/dicom-0.2.0.tar.gz -P /home/packages
+ADD SuiteSparse /tmp/SuiteSparse
+WORKDIR /tmp/SuiteSparse
+RUN make CFLAGS='-DLONGBLAS=long' CXXFLAGS='-DLONGBLAS=long'
+RUN cp -r ./lib/*  /opt/all64/lib/.
+
+ADD ARPACK /tmp/ARPACK
+WORKDIR /tmp/ARPACK
+RUN make -j 8
+RUN make install
 
 
+ADD octave-4.2.1 /tmp/octave-4.2.1
+# compile octave with 64 bit option for fortran array indexes 
+WORKDIR /tmp/octave-4.2.1
+RUN ./configure LD_LIBRARY_PATH=/opt/all64/lib CPPFLAGS=-I/opt/all64/include LDFLAGS=-L/opt/all64/lib \
+  JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
+  --with-hdf5-includedir=/usr/include/hdf5/serial --with-hdf5-libdir=/usr/lib/x86_64-linux-gnu/hdf5/serial \
+   --enable-64 F77_INTEGER_8_FLAG='-fdefault-integer-8'
+RUN make -j 7
+RUN cp -r /opt/all64/lib/*  /usr/lib/.
+#RUN make check 
+RUN make install
+
+
+# Fetch Octave forge packages
+
+ADD octave_package /tmp/octave_package
+
+WORKDIR /tmp/octave_package
 # Install Octave forge packages
-RUN octave --eval "cd /home/packages; \
-                   more off; \
-                   pkg install \
-                   general-2.0.0.tar.gz \
-                   io-2.4.7.tar.gz \
+RUN octave --eval "more off; \
+                   pkg install -auto -global -verbose \
                    control-3.0.0.tar.gz \
+                   general-2.0.0.tar.gz \
                    signal-1.3.2.tar.gz \
                    image-2.6.1.tar.gz \
-                   struct-1.0.14.tar.gz\
-                   optim-1.5.2.tar.gz\
+                   io-2.4.7.tar.gz \
                    statistics-1.3.0.tar.gz"
 
 
-
-
-
-
-RUN pip install octave_kernel
-RUN python -m octave_kernel.install
-RUN git clone https://github.com/neuropoly/qMRLab.git
-
-
-USER $NB_USER
-
-# Copy files from github to work dir 
-
-COPY dogSC_data.tar.gz $HOME/work
-COPY dogSC.ipynb $HOME/work
-COPY bokehCorPlot.ipynb $HOME/work
-COPY README.ipynb $HOME/work
-COPY ReadFrame.tar.gz $HOME/work
-COPY setNifti.m $HOME/work
-COPY bkhPlot.gif $HOME/work
-COPY corInteract.gif $HOME/work
-COPY initOctave.m $HOME/work
-
-
-
-RUN cd $HOME/work
+# Build octave configure file
+RUN echo 'cellfun (@(x) pkg ("load", x.name), pkg ("list"));' >> /etc/octave.conf
+RUN echo more off >> /etc/octave.conf
+RUN echo save_default_options\(\'-7\'\)\; >> /etc/octave.conf
+RUN echo graphics_toolkit gnuplot >> /etc/octave.conf
+ENV OCTAVE_VERSION_INITFILE /etc/octave.conf
+RUN rm -r /tmp/ARPACK /tmp/SuiteSparse /tmp/OpenBLAS-0.2.19 /tmp/qrupdate-1.1.2 /tmp/octave-4.2.1 /tmp/octave_package
+WORKDIR /tmp
