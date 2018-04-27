@@ -35,4 +35,4 @@ COPY setNifti.m .
 COPY bkhPlot.gif .
 COPY corInteract.gif .
 COPY initOctave.m .
-
+USER $NB_USER
