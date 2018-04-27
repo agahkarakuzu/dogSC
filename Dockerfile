@@ -26,13 +26,13 @@ RUN octave --eval "cd qMRLab; \
                    startup;"
 
 
-COPY dogSC_data.tar.gz\
-     dogSC.ipynb\
-     bokehCorPlot.ipynb \
-     README.ipynb \
-     ReadFrame.tar.gz \
-     setNifti.m \
-     bkhPlot.gif \
-     corInteract.gif \
+COPY dogSC_data.tar.gz ${qMRLab_SANDBOX}\
+     dogSC.ipynb ${qMRLab_SANDBOX}\
+     bokehCorPlot.ipynb ${qMRLab_SANDBOX}\
+     README.ipynb ${qMRLab_SANDBOX}\
+     ReadFrame.tar.gz ${qMRLab_SANDBOX}\
+     setNifti.m ${qMRLab_SANDBOX}\
+     bkhPlot.gif ${qMRLab_SANDBOX}\
+     corInteract.gif ${qMRLab_SANDBOX}\
      initOctave.m
 
