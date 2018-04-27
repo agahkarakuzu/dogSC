@@ -1,54 +1,36 @@
-FROM jupyter/scipy-notebook:cc9feab481f7
+FROM simexp/octave:4.2.1_cross_u16
 
 USER root
 
-
-RUN apt update
-
 RUN apt-get update
-
-
-# Install octave
-RUN apt-get install --force-yes -y \
-  bison \
-  build-essential \
-  cmake \
-  cmake-curses-gui \
-  flex \  
-  g++ \
-  graphviz \
-  imagemagick \
-  liboctave-dev \
-  libxi-dev \
-  libxi6 \
-  libxmu-dev \
-  libxmu-headers \
-  libxmu6 \  
-  unzip \
-  xpdf
-  
-# Fetch Octave forge packages
-RUN mkdir /home/octave
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/control-3.0.0.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/struct-1.0.14.tar.gz -P /home/octave
 RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/general-2.0.0.tar.gz -P /home/octave
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/signal-1.3.2.tar.gz -P /home/octave
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/image-2.4.1.tar.gz -P /home/octave
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/io-2.4.1.tar.gz -P /home/octave
-RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/statistics-1.2.4.tar.gz -P /home/octave
-WORKDIR /home/octave
-# Install Octave forge packages
+
 RUN octave --eval "cd /home/octave; \
                    more off; \
                    pkg install -auto -global -verbose \
-                   control-3.0.0.tar.gz \
-                   general-2.0.0.tar.gz \
-                   signal-1.3.2.tar.gz \
-                   image-2.4.1.tar.gz \
-                   io-2.4.1.tar.gz \
-                   statistics-1.2.4.tar.gz"
+           general-2.0.0.tar.gz \
+                   struct-1.0.14"
 
-# Build octave configure file
-RUN echo more off >> /etc/octave.conf
-RUN echo save_default_options\(\'-7\'\)\; >> /etc/octave.conf
-RUN echo graphics_toolkit gnuplot >> /etc/octave.conf
 
+RUN cd $HOME/work
+
+RUN git clone https://github.com/neuropoly/qMRLab.git
+
+RUN octave --eval "startup;"
+
+USER $NB_USER
+
+# Copy files from github to work dir 
+
+COPY dogSC_data.tar.gz $HOME/work
+COPY dogSC.ipynb $HOME/work
+COPY bokehCorPlot.ipynb $HOME/work
+COPY README.ipynb $HOME/work
+COPY ReadFrame.tar.gz $HOME/work
+COPY setNifti.m $HOME/work
+COPY bkhPlot.gif $HOME/work
+COPY corInteract.gif $HOME/work
+COPY initOctave.m $HOME/work
+
+WORKDIR $HOME/work
