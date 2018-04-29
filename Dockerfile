@@ -73,7 +73,7 @@ RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/
 RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/struct-1.0.14.tar.gz -P /home/packages
 RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/optim-1.5.2.tar.gz -P /home/packages
 RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/dicom-0.2.0.tar.gz -P /home/packages
-RUN rm /home/packages/*deb
+RUN rm /home/packages/*tar.gz
 
 RUN octave --eval "cd /home/packages; \
                    more off; \
